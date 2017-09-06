@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- 加载配置文件  在customerController中用了properties的配置文件，需要在springmvc.xml中配置，不然无法取出属性值-->
+	<context:property-placeholder location="classpath:*.properties" />
+	<!-- 扫描带Controller注解的类 -->
+	<context:component-scan base-package="com.forest.core.controller" />
+	<!-- 配置注解驱动，如果配置此标签可以不用配置处理器映射器和适配器 。json转换器也在这里配置了 -->
+	<mvc:annotation-driven />
+	<!-- 视图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<!-- jsp前缀 -->
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<!-- jsp后缀 -->
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+
+	<!-- 以下配置，本demo不用，因此注释掉了 -->
+	<!-- 转换器配置 需要转换才能使用 -->
+	<!-- <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean"> 
+		<property name="converters"> <set> <bean class="com.forest.springmvc.converter.DateConverter" 
+		/> </set> </property> </bean> -->
+	<!-- 异常处理器 -->
+	<!-- <bean id="handlerExceptionResolver" class="com.forest.springmvc.exception.GlobalExceptionResolver" 
+		/> -->
+	<!-- 文件上传 -->
+	<!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
+		设置上传文件的最大尺寸为5MB <property name="maxUploadSize"> <value>5242880</value> </property> 
+		</bean> -->
+	<!-- 资源映射 -->
+	<!-- <mvc:resources location="/WEB-INF/js/" mapping="/js/**" /> -->
+
+	<!--拦截器 -->
+	<!-- <mvc:interceptors> 多个拦截器,顺序执行 <mvc:interceptor> <mvc:mapping path="/**"/> 
+		<bean class="com.forest.springmvc.interceptor.LoginInterceptor"></bean> </mvc:interceptor> 
+		</mvc:interceptors> -->
+
+</beans>
